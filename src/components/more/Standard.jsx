@@ -35,13 +35,13 @@ const Standard = () => {
     <>
       <div className="page-wrapper">
         <div className="content container-fluid">
-          <PageHeader pageTitle="Add Batches & Standards" />
+          <PageHeader pageTitle="Add Standards & Sections" />
 
           {/* Add Standard Part */}
           <AddStandard setsubmitForm={setsubmitForm} submitForm={submitForm} />
           <hr />
           <AddSection allStandards={allStandards} setsubmitForm={setsubmitForm} submitForm={submitForm}/>
-
+<hr />
           <ShowSections allSections={allSections} />
         </div>
       </div>

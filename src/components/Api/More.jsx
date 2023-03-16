@@ -1,8 +1,10 @@
 // All axios api here of students
 import axios from "axios";
 
-//backend's url
-const url = "http://localhost:5000";
+// private
+import { backendURL } from "../private/private";
+
+const url = backendURL;
 
 // getting all the entered standard at one
 const getStandards = async () => {

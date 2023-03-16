@@ -4,6 +4,9 @@ import { NavLink } from "react-router-dom";
 // context hook
 import { TestContext } from "../../context/TestProvider";
 
+// private
+import { backendURL } from "../../private/private";
+
 const TestsForm = (props) => {
   const student_name = props.item.firstname + " " + props.item.lastname;
   const student_id = props.item._id;
@@ -62,7 +65,7 @@ const TestsForm = (props) => {
             <a href="" className="avatar avatar-sm me-2">
               <img
                 className="avatar-img rounded-circle"
-                src="https://img.freepik.com/premium-vector/abstract-human-man-head-logo_23758-326.jpg"
+                src={backendURL + "/public/images/" + props.item.profile}
                 alt="User Image"
               />
             </a>

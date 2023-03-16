@@ -1,17 +1,27 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-//api
+// api
 import { deleteStudent } from "../../Api/Students";
 
+// private
+import { backendURL } from "../../private/private";
+
 const AllStudents = (props) => {
+  const navigate = useNavigate();
   const deletestudent = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const data = {
       _id: props.item._id,
     };
     const response = await deleteStudent(data);
     console.log("delete student data", response);
+    if (response.status === 200) {
+      alert("Student deleted successfully");
+      navigate("/students/showstudents");
+    } else {
+      alert("invalid credentials");
+    }
   };
   const student_name = props.item.firstname + " " + props.item.lastname;
   return (
@@ -21,13 +31,21 @@ const AllStudents = (props) => {
         <td>{props.id}</td>
         <td>
           <h2 className="table-avatar">
-            <a href="student-details.html" className="avatar avatar-sm me-2">
-              <img
-                className="avatar-img rounded-circle"
-                src="https://img.freepik.com/premium-vector/abstract-human-man-head-logo_23758-326.jpg"
-                alt="User Image"
-              />
-            </a>
+            <img
+              // className="avatar-img rounded-circle"
+              // src={`${"http://localhost:5000/public/images/"}${
+              //   props.item.profile
+              // }`}
+              // src={`${"https://classmanager.onrender.com/public/images/"}${props.item.profile}`}
+              src={backendURL + "/public/images/" + props.item.profile}
+              alt=""
+              style={{
+                verticalAlign: "middle",
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+              }}
+            />
 
             {/* -------------------Edit Student by clicking here---------------------------------------------- */}
             <NavLink

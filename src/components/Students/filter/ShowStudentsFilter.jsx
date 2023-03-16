@@ -41,7 +41,7 @@ const ShowStudentsFilter = (props) => {
     <>
       <div className="student-group-form">
         <div className="row">
-          <div className="col-lg-6 col-md-6">
+          <div className="col-lg-4 col-md-4">
             <div className="form-group local-forms">
               <label>
                 Select Standard <span className="login-danger">*</span>
@@ -59,7 +59,7 @@ const ShowStudentsFilter = (props) => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-md-6">
+          <div className="col-lg-4 col-md-4">
             <div className="form-group local-forms">
               <label>
                 Select Section <span className="login-danger">*</span>
@@ -71,6 +71,25 @@ const ShowStudentsFilter = (props) => {
                 name="section"
               >
                 <option value="">Select Section</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="col-lg-4 col-md-4">
+            <div className="form-group local-forms">
+              <label>
+                Select Year <span className="login-danger">*</span>
+              </label>
+              <select
+                className="form-control select"
+                // value={filter.section}
+                // onChange={insertFields}
+                name="year"
+              >
+                <option value="">Select Year</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
               </select>

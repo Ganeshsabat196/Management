@@ -7,6 +7,8 @@ const AddStandard = (props) => {
   const [standard, setstandard] = useState({
     standard: "",
     description: "",
+    startyear: "",
+    endyear: "",
   });
 
   // updating the standard form data on changing the values
@@ -26,20 +28,30 @@ const AddStandard = (props) => {
   const submitForm = async (e) => {
     e.preventDefault();
 
-    const data = {
-      standard: standard.standard,
-      description: standard.description,
-    };
+    console.log(standard.endyear, parseInt(standard.startyear) + 1);
+    if (
+      standard.startyear < standard.endyear &&
+      parseInt(standard.endyear) === parseInt(standard.startyear) + 1
+    ) {
+      const data = {
+        standard: standard.standard,
+        description: standard.description,
+        startyear: parseInt(standard.startyear),
+        endyear: parseInt(standard.endyear),
+      };
 
-    const response = await addStandard(data); // adding a new standard in database
-    console.log(response.status);
+      const response = await addStandard(data); // adding a new standard in database
+      console.log(response.status);
 
-    if (response.status === 200) {
-      props.setsubmitForm(!props.submitForm);
-      alert("New standard added successfully");
-      // navigate('/students/showstudents');
+      if (response.status === 200) {
+        props.setsubmitForm(!props.submitForm);
+        alert("New standard added successfully");
+        // navigate('/students/showstudents');
+      } else {
+        alert("invalid credentials");
+      }
     } else {
-      alert("invalid credentials");
+      alert("Not valid year");
     }
   };
 
@@ -54,11 +66,6 @@ const AddStandard = (props) => {
                   <div className="col-12">
                     <h5 className="form-title student-info">
                       Add Standard{" "}
-                      <span>
-                        <a href="">
-                          <i className="feather-more-vertical" />
-                        </a>
-                      </span>
                     </h5>
                   </div>
 
@@ -74,6 +81,38 @@ const AddStandard = (props) => {
                         value={standard.standard}
                         onChange={insertFields}
                         name="standard"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-sm-4">
+                    <div className="form-group local-forms calendar-icon">
+                      <label>
+                        Starting Year <span className="login-danger">*</span>
+                      </label>
+                      <input
+                        className="form-control datetimepicker"
+                        type="text"
+                        placeholder="YYYY"
+                        value={standard.startyear}
+                        onChange={insertFields}
+                        name="startyear"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-sm-4">
+                    <div className="form-group local-forms calendar-icon">
+                      <label>
+                        Ending Year <span className="login-danger">*</span>
+                      </label>
+                      <input
+                        className="form-control datetimepicker"
+                        type="text"
+                        placeholder="YYYY"
+                        value={standard.endyear}
+                        onChange={insertFields}
+                        name="endyear"
                       />
                     </div>
                   </div>

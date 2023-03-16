@@ -42,6 +42,29 @@ const SideNav = () => {
                   </NavLink>
                 </SubMenu>
                 {/* ------------------------------------------------------------------------- */}
+                {/* ----------------------------- Attendence---------------------------------- */}
+                <SubMenu label="Attendence" icon={<i className="fas fa-user"></i>}>
+                  <NavLink
+                    to="/attendence/showattendence"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <MenuItem>Show Attendence</MenuItem>
+                  </NavLink>
+                  <NavLink
+                    to="/attendence/addattendence"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <MenuItem>Add Attendence</MenuItem>
+                  </NavLink>
+
+                  <NavLink
+                    to="/attendence/editattendence"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <MenuItem>Edit Attendence</MenuItem>
+                  </NavLink>
+                </SubMenu>
+                {/* ------------------------------------------------------------------------- */}
 
                 {/* ----------------------------- Fees---------------------------------- */}
                 <SubMenu

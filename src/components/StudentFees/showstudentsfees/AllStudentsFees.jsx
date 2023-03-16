@@ -1,6 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+// private
+import { backendURL } from "../../private/private";
+
 const AllStudentsFees = (props) => {
   const student_name = props.item.firstname + " " + props.item.lastname;
 
@@ -14,7 +17,7 @@ const AllStudentsFees = (props) => {
             <a href="student-details.html" className="avatar avatar-sm me-2">
               <img
                 className="avatar-img rounded-circle"
-                src="https://img.freepik.com/premium-vector/abstract-human-man-head-logo_23758-326.jpg"
+                src={backendURL + "/public/images/" + props.item.profile}
                 alt="User Image"
               />
             </a>

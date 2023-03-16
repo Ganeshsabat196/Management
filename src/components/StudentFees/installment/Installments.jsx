@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 //api
 import { deleteInstallment } from "../../Api/StudentsFees";
 
 const Installments = (props) => {
+  const navigate = useNavigate();
   // --------------- deleting the Installment on click of this function---------------------------------
   const DeleteInstallment = async (_id, e) => {
     e.preventDefault();
@@ -14,6 +15,12 @@ const Installments = (props) => {
     };
     const response = await deleteInstallment(data);
     console.log("delete student installment data", response);
+    if (response.status === 200) {
+      alert("Student deleted successfully");
+      navigate("/students/showstudents");
+    } else {
+      alert("invalid credentials");
+    }
   };
   // ------------------------------------------------------------------------------------------------------
 
@@ -24,8 +31,8 @@ const Installments = (props) => {
       {fees.map((Installment, i, arr) => {
         return (
           <tr key={i}>
-            <td>{i + 1}</td>
-            {/* <td>{Installment._id}</td> */}
+            {/* <td>Installment - {i + 1}</td> */}
+            <td>{Installment._id}</td>
             <td>{Installment.fees_type}</td>
             <td>{Installment.payment_date}</td>
             <td>{Installment.fees_amount}</td>
@@ -59,6 +66,12 @@ const Installments = (props) => {
                     console.log(data);
                     const response = await deleteInstallment(data);
                     console.log("delete student installment data", response);
+                    if (response.status === 200) {
+                      alert("Student deleted successfully");
+                      navigate("/studentfees/showfees");
+                    } else {
+                      alert("invalid credentials");
+                    }
                   }}
                 >
                   <i className="feather-delete" />

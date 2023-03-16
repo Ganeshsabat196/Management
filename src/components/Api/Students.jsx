@@ -1,8 +1,10 @@
 // All axios api here of students
 import axios from "axios";
 
-//backend's url
-const url = "http://localhost:5000";
+// private
+import { backendURL } from "../private/private";
+
+const url = backendURL;
 
 // getting all the entered students data at one
 const getStudents = async () => {
@@ -42,9 +44,9 @@ const getFilteredStudent = async (data) => {
 // adding a new student in our database
 const addStudents = async (data) => {
   try {
-    console.log("add new student data", data);
+    console.log("add new student data sending", data);
     const response = await axios.post(`${url}/student/addstudent`, data);
-    console.log("add new student response", response);
+    console.log("add new student response receiving", response);
     return response;
   } catch (error) {
     console.log("Error while addstudent API", error.message);

@@ -6,6 +6,8 @@ import { addSection } from "../Api/More";
 const AddSection = (props) => {
   const [section, setsection] = useState({
     standard: "",
+    startyear: "",
+    endyear: "",
     section: "",
     description: "",
   });
@@ -27,13 +29,20 @@ const AddSection = (props) => {
   const submitForm = async (e) => {
     e.preventDefault();
 
+    let splitItem = section.standard;
+    const myArray = splitItem.split("-");
+
+    console.log("myArray", myArray);
+
     const data = {
-      standard: section.standard,
       section: section.section,
       description: section.description,
-    };
 
-    const response = await addSection(data); // adding a new standard in database
+      standard: parseInt(myArray[0]),
+      startyear: parseInt(myArray[1]),
+      endyear: parseInt(myArray[2]),
+    };
+    const response = await addSection(data); // adding a new section in database
     console.log(response.status);
 
     if (response.status === 200) {
@@ -55,11 +64,6 @@ const AddSection = (props) => {
                   <div className="col-12">
                     <h5 className="form-title student-info">
                       Add Section{" "}
-                      <span>
-                        <a href="">
-                          <i className="feather-more-vertical" />
-                        </a>
-                      </span>
                     </h5>
                   </div>
 
@@ -77,9 +81,15 @@ const AddSection = (props) => {
                         <option value="">Select Standard</option>
 
                         {props.allStandards.map((item, i) => {
+                          var valueItem =
+                            item.standard +
+                            "-" +
+                            item.startyear +
+                            "-" +
+                            item.endyear;
                           return (
-                            <option key={i} value={item.standard}>
-                              {item.standard}
+                            <option key={i} value={valueItem}>
+                              {item.standard}--{item.startyear}-{item.endyear}
                             </option>
                           );
                         })}

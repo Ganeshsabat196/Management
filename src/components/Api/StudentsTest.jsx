@@ -1,8 +1,10 @@
 // All axios api here of students test
 import axios from "axios";
 
-// backend's url
-const url = "http://localhost:5000";
+// private
+import { backendURL } from "../private/private";
+
+const url = backendURL;
 
 // getting all the data from students test document
 const getStudentstest = async () => {

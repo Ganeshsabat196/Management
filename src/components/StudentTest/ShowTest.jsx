@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 
 // components
 import PageHeader from "./components/PageHeader";
@@ -10,6 +10,7 @@ import AllTests from "./showtest/AllTests";
 import { deleteTest, getStudentstest } from "../Api/StudentsTest";
 import { getFilteredStudent } from "../Api/Students";
 const ShowTest = () => {
+  const navigate = useNavigate();
   // -------------getting data of all the students test as the page get load----------------------
   const [Tests, setTests] = useState([]);
   const [dates, setdates] = useState([]);
@@ -27,13 +28,22 @@ const ShowTest = () => {
   // ----------------------------------------------------------------------------------------
 
   // -------------------------deleting function to delete the entire test data-----------------
-  const deleteAllMarks = async (test_date) => {
+  const deleteAllMarks = async (test_date, test_subject, test_chapter, e) => {
+    e.preventDefault();
     console.log(test_date);
     const data = {
       test_date: test_date,
+      test_subject: test_subject,
+      test_chapter: test_chapter,
     };
     const response = await deleteTest(data);
     console.log("delete data of all the students tests", response);
+    if (response.status === 200) {
+      alert("Student deleted successfully");
+      navigate("/studentfees/showfees");
+    } else {
+      alert("invalid credentials");
+    }
   };
   // ----------------------------------------------------------------------------------------
 
@@ -88,7 +98,11 @@ const ShowTest = () => {
                                     style={{ textDecoration: "none" }}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      deleteAllMarks(item.test_date);
+                                      deleteAllMarks(
+                                        item.test_date,
+                                        item.test_subject,
+                                        item.test_chapter
+                                      );
                                     }}
                                   >
                                     <i className="feather-delete" />

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 // api
 import { getStudent, editStudent } from "../Api/Students";
+import { getSections } from "../Api/More";
 
 // components
 import PageHeader from "./components/PageHeader";
@@ -17,8 +18,11 @@ const EditStudents = () => {
     location.state.student_name
   );
 
-  // -------------getting data of a single student as the page get load----------------------
+  // -------------getting data of a single student and all the sections as the page get load----------------------
   const [student, setstudent] = useState({});
+  const [profile, setprofile] = useState();
+  const [sections, setsections] = useState([]); // storing all the sections value as the page loads
+  const [varsections, setvarsections] = useState([]); // store the sections value as the standard changes
 
   const singlestudent = async () => {
     const data = {
@@ -27,10 +31,18 @@ const EditStudents = () => {
     const response = await getStudent(data);
     console.log("single student data", response[0]);
     setstudent(response[0]);
+    setprofile(response[0].profile);
+  };
+
+  const allsections = async () => {
+    const response = await getSections();
+    console.log("getting data of all the sections", response);
+    setsections(response);
   };
 
   useEffect(() => {
     singlestudent();
+    allsections(); // getting all the section for dynamic dependent select box
   }, []);
   // --------------------------------------------------------------------------------------------
 
@@ -45,26 +57,45 @@ const EditStudents = () => {
         [name]: value,
       };
     });
+
+    if (name === "standard") {
+      const itemVal = JSON.parse(value);
+      console.log(JSON.parse(value));
+
+      setstudent((preVal) => {
+        return {
+          ...preVal,
+          standard: itemVal.standard,
+          startyear: itemVal.startyear,
+          endyear: itemVal.endyear,
+        };
+      });
+
+      setvarsections(itemVal.batches);
+    }
   };
 
   // on submitting the form sending the data to database using axios api
   const submitForm = async (e) => {
     e.preventDefault();
 
-    const data = {
-      _id: location.state._id,
+    var formdata = new FormData();
+    formdata.append("_id", location.state._id);
+    formdata.append("profile", profile);
+    formdata.append("firstname", student.firstname);
+    formdata.append("lastname", student.lastname);
+    formdata.append("gender", student.gender);
+    formdata.append("dateofbirth", student.dateofbirth);
+    formdata.append("email", student.email);
+    formdata.append("standard", student.standard);
+    formdata.append("section", student.section);
+    formdata.append("phone", student.phone);
+    formdata.append("startyear", student.startyear);
+    formdata.append("endyear", student.endyear);
 
-      firstname: student.firstname,
-      lastname: student.lastname,
-      gender: student.gender,
-      dateofbirth: student.dateofbirth,
-      email: student.email,
-      standard: student.standard,
-      section: student.section,
-      phone: student.phone,
-    };
-
-    const response = await editStudent(data);
+    const response = await editStudent(formdata, {
+      headers: { Authorization: localStorage.getItem("token") },
+    });
     console.log("getting edited data as response", response);
 
     if (response.status === 200) {
@@ -86,8 +117,7 @@ const EditStudents = () => {
               <div className="card comman-shadow">
                 <div className="card-body">
                   <form>
-                    <div className="row">        
-
+                    <div className="row">
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
@@ -183,9 +213,24 @@ const EditStudents = () => {
                             name="standard"
                           >
                             <option value="">Please Select standard </option>
-                            <option value="12">12</option>
-                            <option value="11">11</option>
-                            <option value="10">10</option>
+
+                            {sections.map((item, i) => {
+                              var valueItem = {
+                                standard: item.standard,
+                                startyear: item.startyear,
+                                endyear: item.endyear,
+                                batches: item.batches,
+                              };
+                              return (
+                                <option
+                                  key={i}
+                                  value={JSON.stringify(valueItem)}
+                                >
+                                  {item.standard}--{item.startyear}-
+                                  {item.endyear}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
@@ -202,9 +247,13 @@ const EditStudents = () => {
                             name="section"
                           >
                             <option value="">Please Select Section </option>
-                            <option value="C">C</option>
-                            <option value="B">B</option>
-                            <option value="A">A</option>
+                            {varsections.map((item, i) => {
+                              return (
+                                <option key={i} value={item.section}>
+                                  {item.section}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
@@ -225,11 +274,18 @@ const EditStudents = () => {
 
                       <div className="col-12 col-sm-4">
                         <div className="form-group students-up-files">
-                          <label>Upload Student Photo (150px X 150px)</label>
+                          {/* <label>Upload Student Photo (150px X 150px)</label> */}
                           <div className="uplod">
-                            <label className="file-upload image-upbtn mb-0">
-                              Choose File <input type="file" />
-                            </label>
+                            <input
+                              className="form-control"
+                              type="file"
+                              name="profile"
+                              // value={student.profile}
+                              onChange={(e) => {
+                                setprofile(e.target.files[0]);
+                              }}
+                              placeholder="Choose File"
+                            />
                           </div>
                         </div>
                       </div>

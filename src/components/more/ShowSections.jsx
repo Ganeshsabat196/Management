@@ -7,7 +7,7 @@ const ShowSections = (props) => {
         <div className="col-lg-12">
           <div className="card">
             <div className="card-header">
-              <h5 className="card-title">All Sections</h5>
+              <h5 className="card-title">All Standards & Sections</h5>
             </div>
             <div className="card-body">
               <div className="table-responsive">
@@ -23,7 +23,7 @@ const ShowSections = (props) => {
                     {props.allSections.map((item, i) => {
                       return (
                         <tr key={i} >
-                          <td>{item.standard}</td>
+                          <td>{item.standard}--{item.startyear + "-" + item.endyear}</td>
 
                           {
                             item.batches.map((subItem, id)=>{
