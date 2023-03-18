@@ -9,14 +9,14 @@ const Attendences = (props) => {
             <td className="text-left">{result.Name}</td>
 
             {result.month[props.month].attendences.map((rep, i) => {                
-
-              if (rep.status === true) {
+              // console.log(rep.status[0]);
+              if (rep.status[0] === true) {
                 return (
                   <td key={i}>
                     <i className="fas fa-check text-success"></i>
                   </td>
                 );
-              } else if (rep.status === false) {
+              } else if (rep.status[0] === false) {
                 return (
                   <td key={i}>
                     <i className="fas fa-times text-danger"></i>

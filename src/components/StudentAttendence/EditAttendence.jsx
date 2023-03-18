@@ -72,7 +72,7 @@ const EditAttendence = () => {
       );
     } else {
       return (
-        <div class="alert alert-danger" role="alert">
+        <div className="alert alert-danger" role="alert">
           Select proper filters to update data
         </div>
       );
@@ -192,7 +192,7 @@ const EditAttendence = () => {
     <>
       <div className="page-wrapper">
         <div className="content container-fluid">
-          <PageHeader pageTitle="Add Attendence" />
+          <PageHeader pageTitle="Edit Attendence" />
           <AddAttendenceFilter setFilter={setFilter} />
 
           <div className="row">
@@ -259,7 +259,7 @@ const EditAttendence = () => {
                                         <div className="form-check">
 
 
-                                          {checkfunc(result.month[filter[2]].attendences[filter[4] - 1].status)}
+                                          {checkfunc(result.month[filter[2]].attendences[filter[4] - 1].status[0])}
 
                                           {/* <input
                                             className="form-check-input"

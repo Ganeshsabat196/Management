@@ -43,6 +43,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Base />} >
+          <Route path="" element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
 
           {/* <Route path="/admission">

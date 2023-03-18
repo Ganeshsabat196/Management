@@ -21,9 +21,14 @@ const SideNav = () => {
               </li>
               <Menu>
                 {/* ----------------------------- Dashboard---------------------------------- */}
-                <MenuItem icon={<i className="feather-grid"></i>}>
-                  <span> Dashboard</span>
-                </MenuItem>
+                <NavLink
+                  to="/dashboard"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <MenuItem icon={<i className="feather-grid"></i>}>
+                    <span> Dashboard</span>
+                  </MenuItem>
+                </NavLink>
                 {/* ------------------------------------------------------------------------- */}
 
                 {/* ----------------------------- Students---------------------------------- */}
@@ -63,6 +68,13 @@ const SideNav = () => {
                   >
                     <MenuItem>Edit Attendence</MenuItem>
                   </NavLink>
+
+                  <NavLink
+                    to="/attendence/deleteattendence"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <MenuItem>Delete Attendence</MenuItem>
+                  </NavLink>
                 </SubMenu>
                 {/* ------------------------------------------------------------------------- */}
 
@@ -99,7 +111,7 @@ const SideNav = () => {
                   </NavLink>
                 </SubMenu>
                 {/* ------------------------------------------------------------------------- */}
-                
+
                 {/* ----------------------------- more---------------------------------- */}
                 <SubMenu
                   label="More"
